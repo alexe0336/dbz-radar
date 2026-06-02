@@ -27,10 +27,9 @@ needed at runtime.
 
 ## Build environment
 - Build system: PlatformIO.
-- Board PlatformIO env name: <FILL IN — first task is to find this in
-  platformio.ini and variants/>
-- Build command: pio run -e <env>
-- Firmware output path: .pio/build/<env>/firmware.uf2
+- Board PlatformIO env name: `seeed_wio_tracker_L1`
+- Build command: `pio run -e seeed_wio_tracker_L1`
+- Firmware output path: `.pio/build/seeed_wio_tracker_L1/firmware.uf2`
 
 ## Key code locations
 - Node database (positions, names, IDs): src/mesh/NodeDB.cpp / .h
