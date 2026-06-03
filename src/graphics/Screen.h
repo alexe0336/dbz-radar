@@ -674,7 +674,7 @@ class Screen : public concurrency::OSThread
     // so the chatty log doesn't ship in release builds. Enabled via
     // build_testing_profile(enable_ui_log=True) in mcp-server/userprefs.py.
     // Member function (not free) because FramesetInfo is a private nested
-    // type — only methods of Screen can reach it.
+    // type -- only methods of Screen can reach it.
     void logFrameChange(const char *reason, uint8_t targetIdx);
 #endif
 
@@ -706,6 +706,7 @@ class Screen : public concurrency::OSThread
             uint8_t firstFavorite = 255;
             uint8_t lastFavorite = 255;
             uint8_t lora = 255;
+            uint8_t radar = 255;
         } positions;
 
         uint8_t frameCount = 0;
