@@ -39,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "draw/NodeListRenderer.h"
 #include "draw/NotificationRenderer.h"
 #include "draw/UIRenderer.h"
+#include "draw/DBZRadarRenderer.h"
 #include "graphics/TFTColorRegions.h"
 #include "modules/CannedMessageModule.h"
 
@@ -1216,6 +1217,10 @@ void Screen::setFrames(FrameFocus focus)
         normalFrames[numframes++] = graphics::UIRenderer::drawCompassAndLocationScreen;
         indicatorIcons.push_back(icon_compass);
     }
+    // DBZ Radar frame
+    fsi.positions.radar = numframes;
+    normalFrames[numframes++] = graphics::DBZRadarRenderer::drawRadarFrame;
+    indicatorIcons.push_back(icon_compass);
 #endif
     if (RadioLibInterface::instance && !hiddenFrames.lora) {
         fsi.positions.lora = numframes;
@@ -1757,6 +1762,21 @@ int Screen::handleInputEvent(const InputEvent *event)
             return 0;
         }
     }
+    // UP/DOWN on the DBZ Radar frame changes zoom level (not page-flip)
+#if HAS_GPS
+    if (ui->getUiState()->currentFrame == framesetInfo.positions.radar) {
+        if (event->inputEvent == INPUT_BROKER_UP) {
+            graphics::DBZRadarRenderer::zoomIn();
+            setFastFramerate();
+            return 0;
+        }
+        if (event->inputEvent == INPUT_BROKER_DOWN) {
+            graphics::DBZRadarRenderer::zoomOut();
+            setFastFramerate();
+            return 0;
+        }
+    }
+#endif
     // Use left or right input from a keyboard to move between frames,
     // so long as a mesh module isn't using these events for some other purpose
     if (showingNormalScreen) {
