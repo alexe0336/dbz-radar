@@ -12,6 +12,7 @@
 #include "graphics/draw/DebugRenderer.h"
 #include "graphics/draw/NodeListRenderer.h"
 #include "graphics/draw/UIRenderer.h"
+#include "graphics/draw/DBZRadarRenderer.h"
 
 namespace graphics
 {

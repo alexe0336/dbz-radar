@@ -160,8 +160,8 @@ void drawRadarFrame(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, 
             nodes[pos2] = entry;
             while (pos2 > 0 && nodes[pos2].distanceM < nodes[pos2 - 1].distanceM) {
                 RadarNode tmp    = nodes[pos2];
-                nodes[pos2]     = nodes[pos2 - 1];
-                nodes[pos2 - 1] = tmp;
+                nodes[pos2]      = nodes[pos2 - 1];
+                nodes[pos2 - 1]  = tmp;
                 pos2--;
             }
         } else if (dist < nodes[MAX_RADAR_NODES - 1].distanceM) {
@@ -169,8 +169,8 @@ void drawRadarFrame(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, 
             int pos2 = MAX_RADAR_NODES - 1;
             while (pos2 > 0 && nodes[pos2].distanceM < nodes[pos2 - 1].distanceM) {
                 RadarNode tmp    = nodes[pos2];
-                nodes[pos2]     = nodes[pos2 - 1];
-                nodes[pos2 - 1] = tmp;
+                nodes[pos2]      = nodes[pos2 - 1];
+                nodes[pos2 - 1]  = tmp;
                 pos2--;
             }
         }
@@ -179,6 +179,7 @@ void drawRadarFrame(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, 
     // --- Plot nodes ---
     for (int i = 0; i < nodeCount; i++) {
         float fraction = nodes[i].distanceM / maxRange;
+        bool  clamped  = (fraction >= 1.0f);
         int16_t dx, dy;
         bearingToXY(nodes[i].bearingDeg, fraction, dx, dy);
         int16_t dotX = cx + dx;
@@ -190,6 +191,8 @@ void drawRadarFrame(OLEDDisplay *display, OLEDDisplayUiState *state, int16_t x, 
         display->setFont(FONT_SMALL);
         display->setTextAlignment(TEXT_ALIGN_CENTER);
         display->drawString(dotX, dotY + 3, lbl);
+
+        (void)clamped;
     }
 
     // Node count in panel
